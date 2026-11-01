@@ -13,9 +13,8 @@ public class ManipulateFunctions {
     private DcMotor intake = null;
     private CRServo leftIntake = null;
     private CRServo rightIntake = null;
-    private final double RPMtoVelocity = 0.46676;
-    public double LAUNCHER_TARGET_VELOCITY = 1250; //2678 RPM
-    public double LAUNCHER_MIN_VELOCITY = 1200; //2571 RPM
+    private final double PulsesPerRotation = 28.0; // From 6000 RPM yellow jacket motor datasheet
+    public final double RPMtoVelocity = PulsesPerRotation/60.0;
     public void manipulateInit(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap) {
         intake = hardwareMap.get(DcMotor.class, "intake");
         shooter = hardwareMap.get(DcMotorEx.class, "shooter");
@@ -31,11 +30,12 @@ public class ManipulateFunctions {
         rightIntake.setPower(0);
         leftIntake.setDirection(DcMotorSimple.Direction.REVERSE);
     }
-    public void manipulate(boolean right_bumper, boolean btnA, org.firstinspires.ftc.robotcore.external.Telemetry telemetry) {
+    public void manipulate(boolean right_bumper, boolean btnA, double targetRPM, org.firstinspires.ftc.robotcore.external.Telemetry telemetry) {
         if (right_bumper) {
-            shooter.setVelocity(LAUNCHER_TARGET_VELOCITY * RPMtoVelocity);
-            double trueVelocity = shooter.getVelocity();
-            telemetry.addData("True velocity: ", trueVelocity);
+            shooter.setVelocity(targetRPM * RPMtoVelocity);
+            double trueRPM = shooter.getVelocity()/RPMtoVelocity;
+            telemetry.addData("True RPM: ", trueRPM);
+            telemetry.addData("Goal RPM: ", targetRPM);
         } else {
             shooter.setVelocity(0);
         }

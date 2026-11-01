@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.teamcode.util.DriveFunctions;
 import org.firstinspires.ftc.teamcode.util.globals.Alliance;
 import org.firstinspires.ftc.teamcode.util.vision.FindGamePiece;
 import org.firstinspires.ftc.teamcode.util.vision.Piece;
@@ -16,12 +17,14 @@ import java.util.List;
 
 @TeleOp(name = "LimelightTest")
 public class LimelightTest extends OpMode {
+    DriveFunctions drive = new DriveFunctions();
     Limelight3A limelight;
     Alliance currentAlliance = Alliance.UNKNOWN;
     Piece targetPiece = Piece.NECTAR;
 
     @Override
     public void init() {
+        drive.driveIMUInit(hardwareMap);
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         telemetry.addData("Status", "Initialized");
     }
@@ -55,6 +58,7 @@ public class LimelightTest extends OpMode {
     }
     @Override
     public void loop() {
+        drive.mecanumFieldDrive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, false);
         LLResult limelightResult = limelight.getLatestResult();
         if (limelightResult.isValid()) {
             telemetry.clearAll();

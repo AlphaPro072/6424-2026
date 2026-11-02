@@ -60,7 +60,7 @@ public class OlyCowTeleOp extends OpMode {
                 Globals.invertPose();
             } else {
                 Globals.setAlliance(Alliance.RED);
-                Globals.setPose(Globals.initPoseRed);
+                Globals.setPose(Globals.initPoseRedShooting);
             }
         }
         telemetry.addData("alliance", Globals.getAlliance().name());

@@ -6,8 +6,9 @@ import org.firstinspires.ftc.teamcode.util.CoordinateInverter;
 
 public class Globals {
     private static Alliance alliance = Alliance.UNKNOWN;
-    public static Pose initPoseRed = new Pose(0, 0, 0); //TODO: get real value
-    private static Pose pose = initPoseRed;
+    public static final Pose initPoseRedShooting = new Pose(56, 7.2, 90);
+    public static final Pose initPoseRedOther = new Pose(56, 134.1, 270);
+    private static Pose pose = initPoseRedShooting;
 
     public static Alliance getAlliance() {
         return alliance;

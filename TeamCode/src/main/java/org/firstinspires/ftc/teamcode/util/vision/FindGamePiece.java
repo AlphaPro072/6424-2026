@@ -5,11 +5,12 @@ import com.qualcomm.hardware.limelightvision.LLResultTypes;
 
 public class FindGamePiece {
     private static final double LIMELIGHT_LENS_HEIGHT_INCHES = 7;
+    private static final double LIMELIGHT_LENS_FORWARD_INCHES = 6;
     private static final double LIMELIGHT_MOUNT_Y_DEGREES = 0;
 
     public static double GetGamePieceDistance(LLResultTypes.ColorResult target, Piece targetPiece) {
         double angle = Math.toRadians(LIMELIGHT_MOUNT_Y_DEGREES + target.getTargetYDegrees());
-        return (targetPiece.getRadius() - LIMELIGHT_LENS_HEIGHT_INCHES) / Math.tan(angle);
+        return ((targetPiece.getRadius() - LIMELIGHT_LENS_HEIGHT_INCHES) / Math.tan(angle)) - LIMELIGHT_LENS_FORWARD_INCHES;
     }
 
     public static double GetGamePieceHorizontalAngleRadians(LLResultTypes.ColorResult target) {

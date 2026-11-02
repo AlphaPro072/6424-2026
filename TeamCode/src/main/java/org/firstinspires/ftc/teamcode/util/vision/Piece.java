@@ -6,7 +6,7 @@ public enum Piece {
     POLLEN(1.4),
     NECTAR(1.8);
     private final double radius;
-    private Piece(double radius) {
+    Piece(double radius) {
         this.radius = radius;
     }
     public double getRadius() {

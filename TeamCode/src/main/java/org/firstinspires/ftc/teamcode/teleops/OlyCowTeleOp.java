@@ -94,8 +94,4 @@ public class OlyCowTeleOp extends OpMode {
         }
         telemetry.addData("fieldCentric: ", fieldCentric);
     }
-
-    @Override
-    public void stop() {
-    }
 }

@@ -41,7 +41,7 @@ public class OlyCowTeleOp extends OpMode {
         telemetry.addLine("Press X to toggle initial piece targeting");
         if (gamepad1.xWasPressed()) {
             trackPiece = trackPiece.other();
-            LL.setPieceTracking(trackPiece, Globals.getAlliance());
+            LL.setPieceTracking(trackPiece, Globals.alliance);
         }
         telemetry.addData("tracking: ", trackPiece.name());
         telemetry.addLine("Press B to toggle fieldCentric");
@@ -51,23 +51,23 @@ public class OlyCowTeleOp extends OpMode {
         telemetry.addData("fieldCentric: ", drive.fieldCentric);
         telemetry.addLine("Press A to choose alliance, favors red pollen if unknown alliance");
         if (gamepad1.aWasPressed()) {
-            if (Globals.getAlliance() == Alliance.RED) {
-                Globals.setAlliance(Alliance.BLUE);
+            if (Globals.alliance == Alliance.RED) {
+                Globals.alliance = Alliance.BLUE;
                 Globals.invertPose();
-            } else if (Globals.getAlliance() == Alliance.BLUE){
-                Globals.setAlliance(Alliance.RED);
+            } else if (Globals.alliance == Alliance.BLUE){
+                Globals.alliance = Alliance.RED;
                 Globals.invertPose();
             } else {
-                Globals.setAlliance(Alliance.RED);
+                Globals.alliance = Alliance.RED;
                 Globals.setPose(Globals.initPoseRedShooting);
             }
         }
-        telemetry.addData("alliance", Globals.getAlliance().name());
+        telemetry.addData("alliance", Globals.alliance.name());
     }
 
     @Override
     public void start() {
-        LL.limelightStart(Globals.getAlliance());
+        LL.limelightStart(Globals.alliance);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class OlyCowTeleOp extends OpMode {
         telemetry.addLine("Press X to toggle piece targeting");
         if (gamepad1.xWasPressed()) {
             trackPiece = trackPiece.other();
-            LL.setPieceTracking(trackPiece, Globals.getAlliance());
+            LL.setPieceTracking(trackPiece, Globals.alliance);
         }
         telemetry.addData("tracking: ", trackPiece.name());
         LL.updatePieceMap(Globals.getPose());

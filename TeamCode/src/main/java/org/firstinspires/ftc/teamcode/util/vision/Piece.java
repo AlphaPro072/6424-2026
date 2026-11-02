@@ -22,4 +22,10 @@ public enum Piece {
             return 2;
         }
     }
+    public Piece other() {
+        if (this == POLLEN) {
+            return NECTAR;
+        }
+        return POLLEN;
+    }
 }

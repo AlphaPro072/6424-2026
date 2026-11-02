@@ -24,14 +24,6 @@ public class LimelightFunctions {
         limelight.setPollRateHz(LL_POLL_RATE);
         limelight.start();
     }
-    public void togglePieceTracking(Alliance currentAlliance) {
-        if (targetPiece == Piece.POLLEN) {
-            targetPiece = Piece.NECTAR;
-        } else {
-            targetPiece = Piece.POLLEN;
-        }
-        limelight.pipelineSwitch(targetPiece.getPipeline(currentAlliance));
-    }
     public void setPieceTracking(Piece newPiece, Alliance currentAlliance) {
         targetPiece = newPiece;
         limelight.pipelineSwitch(targetPiece.getPipeline(currentAlliance));

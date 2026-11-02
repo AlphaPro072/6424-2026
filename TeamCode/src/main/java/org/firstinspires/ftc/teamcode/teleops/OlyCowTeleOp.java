@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.util.DriveFunctions;
 import org.firstinspires.ftc.teamcode.util.LimelightFunctions;
 import org.firstinspires.ftc.teamcode.util.ManipulateFunctions;
 import org.firstinspires.ftc.teamcode.util.globals.Alliance;
+import org.firstinspires.ftc.teamcode.util.vision.Piece;
 
 @TeleOp(name = "OlyCowTeleOp")
 public class OlyCowTeleOp extends OpMode {
@@ -15,6 +16,7 @@ public class OlyCowTeleOp extends OpMode {
     ManipulateFunctions manip = new ManipulateFunctions();
     LimelightFunctions LL = new LimelightFunctions();
     Alliance currentAlliance = Alliance.UNKNOWN; // TODO: copy from auton
+    Piece trackPiece = Piece.POLLEN;
     boolean fieldCentric = false;
     double targetRPM = 800;
 
@@ -40,8 +42,10 @@ public class OlyCowTeleOp extends OpMode {
         telemetry.addData("goal RPM: ", targetRPM);
         telemetry.addLine("Press X to toggle initial piece targeting");
         if (gamepad1.xWasPressed()) {
-            LL.togglePieceTracking(currentAlliance);
+            trackPiece = trackPiece.other();
+            LL.setPieceTracking(trackPiece, currentAlliance);
         }
+        telemetry.addData("tracking: ", trackPiece.name());
         telemetry.addLine("Press B to toggle fieldCentric");
         if (gamepad1.bWasPressed()) {
             drive.fieldCentric = !drive.fieldCentric;
@@ -75,8 +79,10 @@ public class OlyCowTeleOp extends OpMode {
         }
         telemetry.addLine("Press X to toggle piece targeting");
         if (gamepad1.xWasPressed()) {
-            LL.togglePieceTracking(currentAlliance);
+            trackPiece = trackPiece.other();
+            LL.setPieceTracking(trackPiece, currentAlliance);
         }
+        telemetry.addData("tracking: ", trackPiece.name());
         manip.manipulate(gamepad1.left_bumper, gamepad1.right_bumper, targetRPM, telemetry);
 
         if (gamepad1.dpadDownWasPressed()) {

@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.util;
 
 import com.pedropathing.math.Pose;
-import com.pedropathing.utils.Angle;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
@@ -47,7 +46,7 @@ public class LimelightFunctions {
             final double VISIBILITY_DIST_INCHES = 65;
             double distanceToPiece = Math.sqrt(Math.pow((robotPose.y()-oldPiece.piecePose.y()), 2) + Math.pow((robotPose.x()-oldPiece.piecePose.x()), 2));
             double headingToPiece = Math.atan2(oldPiece.piecePose.y()-robotPose.y(), oldPiece.piecePose.x()-robotPose.x())-robotPose.heading();
-            headingToPiece = Angle.normalize(headingToPiece + Math.PI) - Math.PI;
+            headingToPiece = ((headingToPiece + Math.PI) - Math.PI) % (2 * Math.PI);
             final double EDGE_CUTOFF_DEG = 4.5;
             final double xFOV_Cutoff = (54.5 - (2 * EDGE_CUTOFF_DEG)) * Math.PI / 180.0;
             boolean inView = Math.abs(headingToPiece) < (xFOV_Cutoff / 2);

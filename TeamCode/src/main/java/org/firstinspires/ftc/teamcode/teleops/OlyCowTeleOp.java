@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.util.vision.Piece;
 
 @TeleOp(name = "OlyCowTeleOp")
 public class OlyCowTeleOp extends OpMode {
+    Pose robotPose = Pose.zero();
     DriveFunctions drive = new DriveFunctions();
     ManipulateFunctions manip = new ManipulateFunctions();
     LimelightFunctions LL = new LimelightFunctions();
@@ -70,19 +71,15 @@ public class OlyCowTeleOp extends OpMode {
     @Override
     public void loop() {
         telemetry.addLine("left bumper to intake, right bumper to rev up shooter, both to shoot");
-        telemetry.addLine("Press A to pathfind to a game piece");
-        if (!gamepad1.a) {
-            drive.Drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-        } else {
-            Pose currentPose = Pose.zero();
-            LL.pathfind(currentPose);
-        }
+        drive.Drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
         telemetry.addLine("Press X to toggle piece targeting");
         if (gamepad1.xWasPressed()) {
             trackPiece = trackPiece.other();
             LL.setPieceTracking(trackPiece, currentAlliance);
         }
         telemetry.addData("tracking: ", trackPiece.name());
+        //TODO: robotPose =
+        LL.updatePieceMap(robotPose);
         manip.manipulate(gamepad1.left_bumper, gamepad1.right_bumper, targetRPM, telemetry);
 
         if (gamepad1.dpadDownWasPressed()) {

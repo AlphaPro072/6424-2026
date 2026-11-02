@@ -31,7 +31,7 @@ public class LimelightFunctions {
         limelight.pipelineSwitch(0);
     }
     public void limelightStart(Alliance currentAlliance) {
-        final int LL_POLL_RATE = 30;
+        final int LL_POLL_RATE = 90;
         limelight.pipelineSwitch(targetPiece.getPipeline(currentAlliance));
         limelight.setPollRateHz(LL_POLL_RATE);
         limelight.start();
@@ -44,11 +44,11 @@ public class LimelightFunctions {
     private void clearFOV(Pose robotPose) {
         for (Iterator<knownPiece> oldPieceIterator = pieceMap.iterator(); oldPieceIterator.hasNext();) {
             knownPiece oldPiece = oldPieceIterator.next();
-            final double VISIBILITY_DIST_INCHES = 70;
+            final double VISIBILITY_DIST_INCHES = 65;
             double distanceToPiece = Math.sqrt(Math.pow((robotPose.y()-oldPiece.piecePose.y()), 2) + Math.pow((robotPose.x()-oldPiece.piecePose.x()), 2));
             double headingToPiece = Math.atan2(oldPiece.piecePose.y()-robotPose.y(), oldPiece.piecePose.x()-robotPose.x())-robotPose.heading();
             headingToPiece = Angle.normalize(headingToPiece + Math.PI) - Math.PI;
-            final double EDGE_CUTOFF_DEG = 3.5;
+            final double EDGE_CUTOFF_DEG = 4.5;
             final double xFOV_Cutoff = (54.5 - (2 * EDGE_CUTOFF_DEG)) * Math.PI / 180.0;
             boolean inView = Math.abs(headingToPiece) < (xFOV_Cutoff / 2);
             if (inView && distanceToPiece < VISIBILITY_DIST_INCHES) {
@@ -57,7 +57,7 @@ public class LimelightFunctions {
         }
     }
     private void processColorResult(LLResultTypes.ColorResult result, Pose robotPose) {
-        final double AREA_FILTER = 0.03;
+        final double AREA_FILTER = 0.04;
         if (result.getTargetArea() > AREA_FILTER) {
             knownPiece newPiece = new knownPiece();
             newPiece.piecePose = FindGamePiece.GetGamePiecePositionFieldSpace(robotPose, result, targetPiece);

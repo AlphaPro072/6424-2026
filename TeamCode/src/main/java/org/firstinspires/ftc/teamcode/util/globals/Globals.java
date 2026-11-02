@@ -2,9 +2,12 @@ package org.firstinspires.ftc.teamcode.util.globals;
 
 import com.pedropathing.math.Pose;
 
+import org.firstinspires.ftc.teamcode.util.CoordinateInverter;
+
 public class Globals {
     private static Alliance alliance = Alliance.UNKNOWN;
-    private static Pose pose = null;
+    public static Pose initPoseRed = new Pose(0, 0, 0); //TODO: get real value
+    private static Pose pose = initPoseRed;
 
     public static Alliance getAlliance() {
         return alliance;
@@ -21,9 +24,7 @@ public class Globals {
     public static void setPose(Pose newPose) {
         pose = new Pose(newPose.x(), newPose.y(), newPose.heading());
     }
-
-    public static void resetGlobals() {
-        alliance = Alliance.UNKNOWN;
-        pose = null;
+    public static void invertPose() {
+        pose = CoordinateInverter.invert(pose);
     }
 }

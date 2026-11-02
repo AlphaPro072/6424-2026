@@ -28,6 +28,7 @@ public class LimelightFunctions {
 
     public void limelightInit(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap){
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
+        limelight.pipelineSwitch(0);
     }
     public void limelightStart(Alliance currentAlliance) {
         final int LL_POLL_RATE = 30;

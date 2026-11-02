@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.teleops;
 
-import com.pedropathing.math.Pose;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,15 +7,14 @@ import org.firstinspires.ftc.teamcode.util.DriveFunctions;
 import org.firstinspires.ftc.teamcode.util.LimelightFunctions;
 import org.firstinspires.ftc.teamcode.util.ManipulateFunctions;
 import org.firstinspires.ftc.teamcode.util.globals.Alliance;
+import org.firstinspires.ftc.teamcode.util.globals.Globals;
 import org.firstinspires.ftc.teamcode.util.vision.Piece;
 
 @TeleOp(name = "OlyCowTeleOp")
 public class OlyCowTeleOp extends OpMode {
-    Pose robotPose = Pose.zero();
     DriveFunctions drive = new DriveFunctions();
     ManipulateFunctions manip = new ManipulateFunctions();
     LimelightFunctions LL = new LimelightFunctions();
-    Alliance currentAlliance = Alliance.UNKNOWN; // TODO: copy from auton
     Piece trackPiece = Piece.POLLEN;
     boolean fieldCentric = false;
     double targetRPM = 800;
@@ -44,7 +42,7 @@ public class OlyCowTeleOp extends OpMode {
         telemetry.addLine("Press X to toggle initial piece targeting");
         if (gamepad1.xWasPressed()) {
             trackPiece = trackPiece.other();
-            LL.setPieceTracking(trackPiece, currentAlliance);
+            LL.setPieceTracking(trackPiece, Globals.getAlliance());
         }
         telemetry.addData("tracking: ", trackPiece.name());
         telemetry.addLine("Press B to toggle fieldCentric");
@@ -54,18 +52,23 @@ public class OlyCowTeleOp extends OpMode {
         telemetry.addData("fieldCentric: ", fieldCentric);
         telemetry.addLine("Press A to choose alliance, favors red pollen if unknown alliance");
         if (gamepad1.aWasPressed()) {
-            if (currentAlliance == Alliance.RED) {
-                currentAlliance = Alliance.BLUE;
+            if (Globals.getAlliance() == Alliance.RED) {
+                Globals.setAlliance(Alliance.BLUE);
+                Globals.invertPose();
+            } else if (Globals.getAlliance() == Alliance.BLUE){
+                Globals.setAlliance(Alliance.RED);
+                Globals.invertPose();
             } else {
-                currentAlliance = Alliance.RED;
+                Globals.setAlliance(Alliance.RED);
+                Globals.setPose(Globals.initPoseRed);
             }
         }
-        telemetry.addData("alliance", currentAlliance.name());
+        telemetry.addData("alliance", Globals.getAlliance().name());
     }
 
     @Override
     public void start() {
-        LL.limelightStart(currentAlliance);
+        LL.limelightStart(Globals.getAlliance());
     }
 
     @Override
@@ -75,11 +78,10 @@ public class OlyCowTeleOp extends OpMode {
         telemetry.addLine("Press X to toggle piece targeting");
         if (gamepad1.xWasPressed()) {
             trackPiece = trackPiece.other();
-            LL.setPieceTracking(trackPiece, currentAlliance);
+            LL.setPieceTracking(trackPiece, Globals.getAlliance());
         }
         telemetry.addData("tracking: ", trackPiece.name());
-        //TODO: robotPose =
-        LL.updatePieceMap(robotPose);
+        LL.updatePieceMap(Globals.getPose());
         manip.manipulate(gamepad1.left_bumper, gamepad1.right_bumper, targetRPM, telemetry);
 
         if (gamepad1.dpadDownWasPressed()) {

@@ -16,7 +16,6 @@ public class OlyCowTeleOp extends OpMode {
     ManipulateFunctions manip = new ManipulateFunctions();
     LimelightFunctions LL = new LimelightFunctions();
     Piece trackPiece = Piece.POLLEN;
-    boolean fieldCentric = false;
     double targetRPM = 800;
 
     @Override
@@ -49,7 +48,7 @@ public class OlyCowTeleOp extends OpMode {
         if (gamepad1.bWasPressed()) {
             drive.fieldCentric = !drive.fieldCentric;
         }
-        telemetry.addData("fieldCentric: ", fieldCentric);
+        telemetry.addData("fieldCentric: ", drive.fieldCentric);
         telemetry.addLine("Press A to choose alliance, favors red pollen if unknown alliance");
         if (gamepad1.aWasPressed()) {
             if (Globals.getAlliance() == Alliance.RED) {
@@ -92,8 +91,8 @@ public class OlyCowTeleOp extends OpMode {
         }
 
         if (gamepad1.bWasPressed()) {
-            fieldCentric = !fieldCentric;
+            drive.fieldCentric = !drive.fieldCentric;
         }
-        telemetry.addData("fieldCentric: ", fieldCentric);
+        telemetry.addData("fieldCentric: ", drive.fieldCentric);
     }
 }

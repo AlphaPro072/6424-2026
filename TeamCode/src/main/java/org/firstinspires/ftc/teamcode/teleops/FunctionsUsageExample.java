@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.util.ManipulateFunctions;
 public class FunctionsUsageExample extends OpMode {
     DriveFunctions drive = new DriveFunctions();
     ManipulateFunctions manip = new ManipulateFunctions();
-    boolean fieldCentric = false;
     double targetRPM = 800;
 
     @Override
@@ -37,11 +36,7 @@ public class FunctionsUsageExample extends OpMode {
             drive.fieldCentric = !drive.fieldCentric;
         }
         telemetry.addLine("Press B to toggle fieldCentric");
-        telemetry.addData("fieldCentric: ", fieldCentric);
-    }
-
-    @Override
-    public void start() {
+        telemetry.addData("fieldCentric: ", drive.fieldCentric);
     }
 
     @Override
@@ -60,12 +55,8 @@ public class FunctionsUsageExample extends OpMode {
         }
 
         if (gamepad1.bWasPressed()) {
-            fieldCentric = !fieldCentric;
+            drive.fieldCentric = !drive.fieldCentric;
         }
-        telemetry.addData("fieldCentric: ", fieldCentric);
-    }
-
-    @Override
-    public void stop() {
+        telemetry.addData("fieldCentric: ", drive.fieldCentric);
     }
 }

@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode.util.globals;
 
 import com.pedropathing.math.Pose;
 
-import org.firstinspires.ftc.teamcode.util.CoordinateInverter;
-
 public class Globals {
     private static Alliance alliance = Alliance.UNKNOWN;
     public static final Pose initPoseRedShooting = new Pose(56, 7.2, 90);
@@ -26,6 +24,8 @@ public class Globals {
         pose = new Pose(newPose.x(), newPose.y(), newPose.heading());
     }
     public static void invertPose() {
-        pose = CoordinateInverter.invert(pose);
+        double heading = pose.heading() + Math.PI;
+        heading %= 2 * Math.PI;
+        pose = new Pose(144 - pose.x(), 144 - pose.y(), heading);
     }
 }

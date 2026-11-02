@@ -34,7 +34,7 @@ public class FunctionsUsageExample extends OpMode {
         }
         telemetry.addData("goal RPM: ", targetRPM);
         if (gamepad1.bWasPressed()) {
-            fieldCentric = !fieldCentric;
+            drive.fieldCentric = !drive.fieldCentric;
         }
         telemetry.addLine("Press B to toggle fieldCentric");
         telemetry.addData("fieldCentric: ", fieldCentric);
@@ -46,10 +46,11 @@ public class FunctionsUsageExample extends OpMode {
 
     @Override
     public void loop() {
+        telemetry.addLine("left bumper to intake, right bumper to rev up shooter, both to shoot");
 
-        drive.mecanumFieldDrive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x, fieldCentric);
+        drive.Drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
-        manip.manipulate( gamepad1.left_bumper, gamepad1.right_bumper, targetRPM, telemetry);
+        manip.manipulate(gamepad1.left_bumper, gamepad1.right_bumper, targetRPM, telemetry);
 
         if (gamepad1.dpadDownWasPressed()) {
             targetRPM -= 20;

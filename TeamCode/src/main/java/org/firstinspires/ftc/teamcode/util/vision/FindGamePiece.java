@@ -4,26 +4,28 @@ import com.pedropathing.math.Pose;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 
 public class FindGamePiece {
-    private static final double LIMELIGHT_HEIGHT = 0;
+    private static final double LIMELIGHT_LENS_HEIGHT_INCHES = 7;
     private static final double LIMELIGHT_MOUNT_Y_DEGREES = 0;
 
     public static double GetGamePieceDistance(LLResultTypes.ColorResult target, Piece targetPiece) {
         double angle = Math.toRadians(LIMELIGHT_MOUNT_Y_DEGREES + target.getTargetYDegrees());
-        return (targetPiece.getRadius() - LIMELIGHT_HEIGHT) / Math.tan(angle);
+        return (targetPiece.getRadius() - LIMELIGHT_LENS_HEIGHT_INCHES) / Math.tan(angle);
+    }
+
+    public static double GetGamePieceHorizontalAngleRadians(LLResultTypes.ColorResult target) {
+        return Math.toRadians(target.getTargetXDegrees());
     }
 
     public static Pose GetGamePiecePositionFieldSpace(Pose robotPose, LLResultTypes.ColorResult target, Piece targetPiece) {
         double distance = GetGamePieceDistance(target, targetPiece);
 
-        double horizontalAngle = Math.toRadians(target.getTargetXDegrees());
-        double forwardDistance = Math.cos(horizontalAngle) * distance;
-        double horizontalDistance = Math.sin(horizontalAngle) * distance;
+        double horizontalAngleRadians = GetGamePieceHorizontalAngleRadians(target);
+        double forwardDistance = Math.cos(horizontalAngleRadians) * distance;
+        double horizontalDistance = Math.sin(horizontalAngleRadians) * distance;
 
         double xPose = robotPose.x() + (horizontalDistance * Math.cos(-robotPose.heading()) - forwardDistance * Math.sin(-robotPose.heading()));
         double yPose = robotPose.y() + (horizontalDistance * Math.sin(-robotPose.heading()) + forwardDistance * Math.cos(-robotPose.heading()));
 
-        Pose piecePose = new Pose(xPose, yPose);
-
-        return piecePose;
+        return new Pose(xPose, yPose);
     }
 }

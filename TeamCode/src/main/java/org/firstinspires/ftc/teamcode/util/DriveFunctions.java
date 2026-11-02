@@ -14,6 +14,7 @@ public class DriveFunctions {
     private DcMotor leftBackDrive = null;
     private DcMotor rightBackDrive = null;
     private IMU imu = null;
+    public boolean fieldCentric = false;
     public void driveIMUInit(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap) {
         leftFrontDrive = hardwareMap.get(DcMotor.class, "leftFrontDrive");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFrontDrive");
@@ -47,7 +48,7 @@ public class DriveFunctions {
 
     }
 
-    public void mecanumFieldDrive(double forward, double strafe, double rotate, boolean fieldCentric) {
+    public void Drive(double forward, double strafe, double rotate) {
         if (fieldCentric) {
             double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
             double fieldStrafe = strafe * Math.cos(-botHeading) - forward * Math.sin(-botHeading);

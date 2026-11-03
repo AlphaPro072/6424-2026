@@ -15,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class LimelightFunctions {
-    private int pastChoice = 0;
     private final ElapsedTime runtime = new ElapsedTime();
 
     private static class knownPiece {
@@ -95,21 +94,18 @@ public class LimelightFunctions {
         final int cases = 3;
         final double switchFrequency = 3;
         final int choice = (int)(runtime.seconds() * switchFrequency) % cases;
-        if (choice != pastChoice) {
-            pastChoice = choice;
-            switch (choice) {
-                case 0:
-                    trackingPieces = true;
-                    setPieceTracking(Piece.POLLEN);
-                    break;
-                case 1:
-                    trackingPieces = true;
-                    setPieceTracking(Piece.NECTAR);
-                    break;
-                case 2:
-                    togglePieceTracking();
-                    break;
-            }
+        switch (choice) {
+            case 0:
+                trackingPieces = true;
+                setPieceTracking(Piece.POLLEN);
+                break;
+            case 1:
+                trackingPieces = true;
+                setPieceTracking(Piece.NECTAR);
+                break;
+            case 2:
+                togglePieceTracking();
+                break;
         }
     }
 }

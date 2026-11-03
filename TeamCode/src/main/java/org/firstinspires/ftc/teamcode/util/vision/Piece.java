@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.util.vision;
 
 import org.firstinspires.ftc.teamcode.util.globals.Alliance;
+import org.firstinspires.ftc.teamcode.util.globals.Globals;
 
 public enum Piece {
     POLLEN(1.4),
@@ -12,11 +13,11 @@ public enum Piece {
     public double getRadius() {
         return this.radius;
     }
-    public int getPipeline(Alliance currentAlliance) {
+    public int getPipeline() {
         if (this == POLLEN) {
             return 0;
         }
-        if (currentAlliance == Alliance.BLUE) {
+        if (Globals.alliance == Alliance.BLUE) {
             return 1;
         } else {
             return 2;

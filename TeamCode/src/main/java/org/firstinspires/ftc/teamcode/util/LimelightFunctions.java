@@ -6,7 +6,6 @@ import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.util.globals.Globals;
 import org.firstinspires.ftc.teamcode.util.vision.Piece;
 import org.firstinspires.ftc.teamcode.util.vision.FindGamePiece;
 
@@ -35,7 +34,7 @@ public class LimelightFunctions {
 
     public void limelightStart() {
         final int LL_POLL_RATE = 90;
-        limelight.pipelineSwitch(targetPiece.getPipeline(Globals.alliance));
+        limelight.pipelineSwitch(targetPiece.getPipeline());
         limelight.setPollRateHz(LL_POLL_RATE);
         limelight.start();
         runtime.reset();
@@ -43,11 +42,11 @@ public class LimelightFunctions {
 
     public void togglePieceTracking() {
         targetPiece = targetPiece.other();
-        limelight.pipelineSwitch(targetPiece.getPipeline(Globals.alliance));
+        limelight.pipelineSwitch(targetPiece.getPipeline());
     }
     public void setPieceTracking(Piece newPiece) {
         targetPiece = newPiece;
-        limelight.pipelineSwitch(targetPiece.getPipeline(Globals.alliance));
+        limelight.pipelineSwitch(targetPiece.getPipeline());
     }
 
     private void clearFOV(Pose robotPose) {

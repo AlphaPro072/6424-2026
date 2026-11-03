@@ -52,7 +52,7 @@ public class LimelightTest extends OpMode {
 
     @Override
     public void start() {
-        limelight.pipelineSwitch(targetPiece.getPipeline(currentAlliance));
+        limelight.pipelineSwitch(targetPiece.getPipeline());
         limelight.setPollRateHz(10);
         limelight.start();
     }

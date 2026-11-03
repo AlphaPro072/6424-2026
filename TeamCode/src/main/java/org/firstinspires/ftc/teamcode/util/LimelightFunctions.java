@@ -91,7 +91,7 @@ public class LimelightFunctions {
             }
         }
     }
-    public void rotateTracking() {
+    public void alternateTracking() {
         final int cases = 3;
         final double switchFrequency = 3;
         final int choice = (int)(runtime.seconds() * switchFrequency) % cases;

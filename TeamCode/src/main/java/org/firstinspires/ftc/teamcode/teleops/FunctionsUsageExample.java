@@ -45,7 +45,8 @@ public class FunctionsUsageExample extends OpMode {
 
         drive.Drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
 
-        manip.manipulate(gamepad1.left_bumper, gamepad1.right_bumper, targetRPM, telemetry);
+        manip.intake(gamepad1.left_bumper);
+        manip.shoot(gamepad1.right_bumper, targetRPM, telemetry);
 
         if (gamepad1.dpadDownWasPressed()) {
             targetRPM -= 20;

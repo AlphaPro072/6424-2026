@@ -41,7 +41,7 @@ public class OlyCowTeleOp extends OpMode {
         telemetry.addLine("Press X to toggle initial piece targeting");
         if (gamepad1.xWasPressed()) {
             trackPiece = trackPiece.other();
-            LL.setPieceTracking(trackPiece, Globals.alliance);
+            LL.setPieceTracking(trackPiece);
         }
         telemetry.addData("tracking: ", trackPiece.name());
         telemetry.addLine("Press B to toggle fieldCentric");
@@ -49,7 +49,7 @@ public class OlyCowTeleOp extends OpMode {
             drive.fieldCentric = !drive.fieldCentric;
         }
         telemetry.addData("fieldCentric: ", drive.fieldCentric);
-        telemetry.addLine("Press A to choose alliance, favors red pollen if unknown alliance");
+        telemetry.addLine("Press A to choose alliance, favors red nectar if unknown alliance");
         if (gamepad1.aWasPressed()) {
             if (Globals.alliance == Alliance.RED) {
                 Globals.alliance = Alliance.BLUE;
@@ -67,7 +67,7 @@ public class OlyCowTeleOp extends OpMode {
 
     @Override
     public void start() {
-        LL.limelightStart(Globals.alliance);
+        LL.limelightStart();
     }
 
     @Override
@@ -77,7 +77,7 @@ public class OlyCowTeleOp extends OpMode {
         telemetry.addLine("Press X to toggle piece targeting");
         if (gamepad1.xWasPressed()) {
             trackPiece = trackPiece.other();
-            LL.setPieceTracking(trackPiece, Globals.alliance);
+            LL.setPieceTracking(trackPiece);
         }
         telemetry.addData("tracking: ", trackPiece.name());
         LL.updatePieceMap(Globals.getPose());

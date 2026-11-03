@@ -42,6 +42,10 @@ public class LimelightFunctions {
         runtime.reset();
     }
 
+    public void togglePieceTracking() {
+        targetPiece = targetPiece.other();
+        limelight.pipelineSwitch(targetPiece.getPipeline(Globals.alliance));
+    }
     public void setPieceTracking(Piece newPiece) {
         targetPiece = newPiece;
         limelight.pipelineSwitch(targetPiece.getPipeline(Globals.alliance));
@@ -103,6 +107,7 @@ public class LimelightFunctions {
                     setPieceTracking(Piece.NECTAR);
                     break;
                 case 2:
+                    togglePieceTracking();
                     break;
             }
         }

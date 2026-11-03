@@ -17,19 +17,22 @@ import java.util.List;
 public class LimelightFunctions {
     private int pastChoice = 0;
     private final ElapsedTime runtime = new ElapsedTime();
+
     private static class knownPiece {
         public Pose piecePose;
         public Piece pieceType;
         public double lastTimeSeenSeconds;
     }
+
     private Limelight3A limelight;
     private Piece targetPiece = Piece.POLLEN;
     private final ArrayList<knownPiece> pieceMap = new ArrayList<>();
 
-    public void limelightInit(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap){
+    public void limelightInit(com.qualcomm.robotcore.hardware.HardwareMap hardwareMap) {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
         limelight.pipelineSwitch(0);
     }
+
     public void limelightStart() {
         final int LL_POLL_RATE = 90;
         limelight.pipelineSwitch(targetPiece.getPipeline(Globals.alliance));
@@ -37,16 +40,18 @@ public class LimelightFunctions {
         limelight.start();
         runtime.reset();
     }
-    private void changePieceTracking(Piece newPiece) {
+
+    public void setPieceTracking(Piece newPiece) {
         targetPiece = newPiece;
         limelight.pipelineSwitch(targetPiece.getPipeline(Globals.alliance));
     }
+
     private void clearFOV(Pose robotPose) {
-        for (Iterator<knownPiece> oldPieceIterator = pieceMap.iterator(); oldPieceIterator.hasNext();) {
+        for (Iterator<knownPiece> oldPieceIterator = pieceMap.iterator(); oldPieceIterator.hasNext(); ) {
             knownPiece oldPiece = oldPieceIterator.next();
             final double VISIBILITY_DIST_INCHES = 65;
-            double distanceToPiece = Math.sqrt(Math.pow((robotPose.y()-oldPiece.piecePose.y()), 2) + Math.pow((robotPose.x()-oldPiece.piecePose.x()), 2));
-            double headingToPiece = Math.atan2(oldPiece.piecePose.y()-robotPose.y(), oldPiece.piecePose.x()-robotPose.x())-robotPose.heading();
+            double distanceToPiece = Math.sqrt(Math.pow((robotPose.y() - oldPiece.piecePose.y()), 2) + Math.pow((robotPose.x() - oldPiece.piecePose.x()), 2));
+            double headingToPiece = Math.atan2(oldPiece.piecePose.y() - robotPose.y(), oldPiece.piecePose.x() - robotPose.x()) - robotPose.heading();
             headingToPiece = ((headingToPiece + Math.PI) - Math.PI) % (2 * Math.PI);
             final double EDGE_CUTOFF_DEG = 4.5;
             final double xFOV_Cutoff = (54.5 - (2 * EDGE_CUTOFF_DEG)) * Math.PI / 180.0;
@@ -56,6 +61,7 @@ public class LimelightFunctions {
             }
         }
     }
+
     private void processColorResult(LLResultTypes.ColorResult result, Pose robotPose) {
         final double AREA_FILTER = 0.04;
         if (result.getTargetArea() > AREA_FILTER) {
@@ -66,7 +72,8 @@ public class LimelightFunctions {
             pieceMap.add(newPiece);
         }
     }
-    public void update(Pose robotPose) {
+
+    public void updatePieceMap(Pose robotPose) {
         LLResult limelightResult = limelight.getLatestResult();
         if (limelightResult.isValid()) {
             clearFOV(robotPose);
@@ -75,6 +82,8 @@ public class LimelightFunctions {
                 processColorResult(result, robotPose);
             }
         }
+    }
+    public void rotateTracking() {
         final int cases = 3;
         final double switchFrequency = 3;
         final int choice = (int)(runtime.seconds() * switchFrequency) % cases;
@@ -82,10 +91,10 @@ public class LimelightFunctions {
             pastChoice = choice;
             switch (choice) {
                 case 0:
-                    changePieceTracking(Piece.POLLEN);
+                    setPieceTracking(Piece.POLLEN);
                     break;
                 case 1:
-                    changePieceTracking(Piece.NECTAR);
+                    setPieceTracking(Piece.NECTAR);
                     break;
                 case 2:
                     break;

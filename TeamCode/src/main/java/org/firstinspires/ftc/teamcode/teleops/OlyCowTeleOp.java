@@ -66,7 +66,8 @@ public class OlyCowTeleOp extends OpMode {
     public void loop() {
         telemetry.addLine("left bumper to intake, right bumper to rev up shooter, both to shoot");
         drive.Drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
-        LL.update(Globals.getPose());
+        LL.updatePieceMap(Globals.getPose());
+        LL.rotateTracking();
         manip.manipulate(gamepad1.left_bumper, gamepad1.right_bumper, targetRPM, telemetry);
 
         if (gamepad1.dpadDownWasPressed()) {

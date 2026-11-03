@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class LimelightFunctions {
+    private int pastChoice = 0;
     private final ElapsedTime runtime = new ElapsedTime();
     private static class knownPiece {
         public Pose piecePose;
@@ -36,7 +37,7 @@ public class LimelightFunctions {
         limelight.start();
         runtime.reset();
     }
-    public void setPieceTracking(Piece newPiece) {
+    private void changePieceTracking(Piece newPiece) {
         targetPiece = newPiece;
         limelight.pipelineSwitch(targetPiece.getPipeline(Globals.alliance));
     }
@@ -65,13 +66,29 @@ public class LimelightFunctions {
             pieceMap.add(newPiece);
         }
     }
-    public void updatePieceMap(Pose robotPose) {
+    public void update(Pose robotPose) {
         LLResult limelightResult = limelight.getLatestResult();
         if (limelightResult.isValid()) {
             clearFOV(robotPose);
             List<LLResultTypes.ColorResult> colorResults = limelightResult.getColorResults();
             for (LLResultTypes.ColorResult result : colorResults) {
                 processColorResult(result, robotPose);
+            }
+        }
+        final int cases = 3;
+        final double switchFrequency = 3;
+        final int choice = (int)(runtime.seconds() * switchFrequency) % cases;
+        if (choice != pastChoice) {
+            pastChoice = choice;
+            switch (choice) {
+                case 0:
+                    changePieceTracking(Piece.POLLEN);
+                    break;
+                case 1:
+                    changePieceTracking(Piece.NECTAR);
+                    break;
+                case 2:
+                    break;
             }
         }
     }

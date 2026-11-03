@@ -25,6 +25,7 @@ public class LimelightFunctions {
     }
 
     private Limelight3A limelight;
+    private boolean trackingPieces = true;
     private Piece targetPiece = Piece.POLLEN;
     private final ArrayList<knownPiece> pieceMap = new ArrayList<>();
 
@@ -74,6 +75,9 @@ public class LimelightFunctions {
     }
 
     public void updatePieceMap(Pose robotPose) {
+        if (!trackingPieces) {
+            return;
+        }
         LLResult limelightResult = limelight.getLatestResult();
         if (limelightResult.isValid()) {
             clearFOV(robotPose);
@@ -91,9 +95,11 @@ public class LimelightFunctions {
             pastChoice = choice;
             switch (choice) {
                 case 0:
+                    trackingPieces = true;
                     setPieceTracking(Piece.POLLEN);
                     break;
                 case 1:
+                    trackingPieces = true;
                     setPieceTracking(Piece.NECTAR);
                     break;
                 case 2:

@@ -21,15 +21,13 @@ public class Park extends LinearOpMode {
             if (gamepad1.bWasPressed()) {
                 alliance = Alliance.RED;
                 Globals.follower.setPose(Paths.parkRed().get(0));
-                telemetry.addLine("Red alliance");
-                telemetry.update();
             }
             if (gamepad1.xWasPressed()) {
                 alliance = Alliance.BLUE;
                 Globals.follower.setPose(Paths.parkBlue().get(0));
-                telemetry.addLine("Blue alliance");
-                telemetry.update();
             }
+            telemetry.addData("Telemetry:", alliance.name());
+            telemetry.update();
         }
         if (opModeIsActive()) {
             if (alliance != Alliance.UNKNOWN) {

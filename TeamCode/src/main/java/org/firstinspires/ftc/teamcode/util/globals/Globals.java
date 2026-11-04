@@ -15,9 +15,19 @@ public class Globals {
     public static void setPose(Pose newPose) {
         pose = new Pose(newPose.x(), newPose.y(), newPose.heading());
     }
-    public static void invertPose() {
-        double heading = pose.heading() + Math.PI;
+    public static Pose invertPose(Pose oldPose) {
+        double heading = oldPose.heading() + Math.PI;
         heading %= 2 * Math.PI;
-        pose = new Pose(144 - pose.x(), 144 - pose.y(), heading);
+        return new Pose(144 - oldPose.x(), 144 - oldPose.y(), heading);
+    }
+
+    public static Pose invertPoseNoHeading(Pose oldPose) {
+        return new Pose(144 - oldPose.x(), 144 - oldPose.y());
+    }
+
+    public static double invertHeading(double oldHeading) {
+        double heading = oldHeading + Math.PI;
+        heading %= 2 * Math.PI;
+        return heading;
     }
 }

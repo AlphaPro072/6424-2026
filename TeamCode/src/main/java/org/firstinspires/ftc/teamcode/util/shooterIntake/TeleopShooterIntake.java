@@ -57,6 +57,7 @@ public class TeleopShooterIntake
     public void shoot() {
         shooterMotor.setVelocity(shooterShootVelocity);
         intakeMotor.setPower(INDEXER_SHOOT_POWER);
+        isLaunching = true;
     }
 
     public void setShooterVelocity(double velocity) {
@@ -70,7 +71,7 @@ public class TeleopShooterIntake
     }
 
     public void decrementVelocity() {
-        shooterShootVelocity -= SHOOTER_SHOOT_VELOCITY;
+        shooterShootVelocity -= SHOOTER_SHOOT_VELOCITY_INCREMENT;
         if (isLaunching) shooterMotor.setVelocity(shooterShootVelocity);
     }
 

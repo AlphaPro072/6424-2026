@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.autons;
+package org.firstinspires.ftc.teamcode.autons;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.ivy.Scheduler;

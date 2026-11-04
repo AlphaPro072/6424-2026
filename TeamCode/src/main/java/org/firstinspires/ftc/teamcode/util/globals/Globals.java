@@ -7,7 +7,6 @@ public class Globals {
     public static Follower follower;
     public static Alliance alliance = Alliance.UNKNOWN;
     public static final Pose initPoseRedShooting = new Pose(56, 7.2, 90);
-    public static final Pose initPoseRedOther = new Pose(56, 134.1, 270);
 
     public static Pose getPose() {
         return new Pose(follower.pose().x(), follower.pose().y(), follower.pose().heading());
@@ -15,6 +14,13 @@ public class Globals {
 
     public static void setPose(Pose newPose) {
         follower.setPose(new Pose(newPose.x(), newPose.y(), newPose.heading()));
+    }
+
+    public static void writePose(org.firstinspires.ftc.robotcore.external.Telemetry telemetry) {
+        telemetry.addData("x", Globals.follower.pose().x());
+        telemetry.addData("y", Globals.follower.pose().y());
+        telemetry.addData("heading", Globals.follower.pose().heading());
+        telemetry.update();
     }
     public static void invertPose() {
         double heading = follower.pose().heading() + Math.PI;

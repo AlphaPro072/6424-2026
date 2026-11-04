@@ -40,10 +40,7 @@ public class Park extends LinearOpMode {
                 while (opModeIsActive()) {
                     Globals.follower.update();
                     Scheduler.execute();
-                    telemetry.addData("x", Globals.follower.pose().x());
-                    telemetry.addData("y", Globals.follower.pose().y());
-                    telemetry.addData("heading", Globals.follower.pose().heading());
-                    telemetry.update();
+                    Globals.writePose(telemetry);
                 }
                 Globals.alliance = this.alliance;
             }

@@ -77,6 +77,8 @@ public class OlyCowTeleOp extends OpMode {
         if (gamepad1.dpadUpWasPressed()) {
             targetRPM += 20;
         }
+        Globals.writePose(telemetry);
+        Globals.follower.update();
 
         if (gamepad1.bWasPressed()) {
             drive.fieldCentric = !drive.fieldCentric;

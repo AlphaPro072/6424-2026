@@ -1,24 +1,25 @@
 package org.firstinspires.ftc.teamcode.util.globals;
 
+import com.pedropathing.follower.Follower;
 import com.pedropathing.math.Pose;
 
 public class Globals {
+    public static Follower follower;
     public static Alliance alliance = Alliance.UNKNOWN;
     public static final Pose initPoseRedShooting = new Pose(56, 7.2, 90);
     public static final Pose initPoseRedOther = new Pose(56, 134.1, 270);
-    private static Pose pose = initPoseRedShooting;
 
     public static Pose getPose() {
-        return new Pose(pose.x(), pose.y(), pose.heading());
+        return new Pose(follower.pose().x(), follower.pose().y(), follower.pose().heading());
     }
 
     public static void setPose(Pose newPose) {
-        pose = new Pose(newPose.x(), newPose.y(), newPose.heading());
+        follower.setPose(new Pose(newPose.x(), newPose.y(), newPose.heading()));
     }
-    public static Pose invertPose(Pose oldPose) {
-        double heading = oldPose.heading() + Math.PI;
+    public static void invertPose() {
+        double heading = follower.pose().heading() + Math.PI;
         heading %= 2 * Math.PI;
-        return new Pose(144 - oldPose.x(), 144 - oldPose.y(), heading);
+        follower.setPose(new Pose(144 - follower.pose().x(), 144 - follower.pose().y(), heading));
     }
 
     public static Pose invertPoseNoHeading(Pose oldPose) {
